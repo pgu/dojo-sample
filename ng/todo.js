@@ -1,5 +1,6 @@
 angular.module('todoApp', [])
-  .controller('TodoListController', function () {
+  .controller('TodoListController', function ($window, $scope) {
+
     var todoList = this;
     todoList.todos = [
       { text: 'learn angular', done: true },
@@ -25,5 +26,34 @@ angular.module('todoApp', [])
         if (!todo.done) todoList.todos.push(todo);
       });
     };
+
+
+    function listenToDojo() {
+      $window.Bridge.onEventDojo(function () {
+        todoList.todos.push({ text: 'on event dojo', done: true });
+        $scope.$applyAsync();
+
+        $window.Bridge.sendEventNG('Yipeeee!');
+
+      });
+
+    }
+
+    function onBridgeLoaded(event) {
+
+      console.info(event);
+
+      if (event.data === 'bridgeIsLoaded') {
+        listenToDojo();
+      }
+
+    };
+
+    if (!$window.Bridge) {
+      $window.addEventListener("message", onBridgeLoaded, false);
+    } else {
+      listenToDojo();
+    }
+
 
   });
