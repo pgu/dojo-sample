@@ -4,7 +4,7 @@ angular.module('todoApp', [])
     var todoList = this;
     todoList.todos = [
       { text: 'learn angular', done: true },
-      { text: 'build an angular app', done: false }];
+      { text: 'build an angular app', done: false } ];
 
     todoList.addTodo = function () {
       todoList.todos.push({ text: todoList.todoText, done: false });
@@ -28,7 +28,7 @@ angular.module('todoApp', [])
     };
 
 
-    function listenToDojo() {
+    function listenToDojo () {
       $window.Bridge.onEventDojo(function () {
         todoList.todos.push({ text: 'Dojo event received', done: true });
         $scope.$applyAsync();
@@ -39,7 +39,7 @@ angular.module('todoApp', [])
 
     }
 
-    function onBridgeLoaded(event) {
+    function onBridgeLoaded (event) {
 
       console.info(event);
 
