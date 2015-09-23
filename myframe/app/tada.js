@@ -47,4 +47,20 @@ angular.module('tadaApp', [])
       $window.parent.postMessage({ type: 'updateData', todos: todoList.todos }, '*');
     };
 
+    function updateData (todos) {
+      todoList.todos = todos;
+      $scope.$applyAsync();
+    };
+
+    function onMessage (event) {
+      if (event.data.type === 'updateData') {
+        updateData(event.data.todos);
+
+      } else {
+        throw 'Unknown message ' + event.data;
+      }
+
+    };
+
+    $window.addEventListener("message", onMessage, false);
   });

@@ -42,6 +42,10 @@ angular.module('todoApp', [])
       todoList.todos = angular.fromJson(jsonTasks);
     };
 
+    todoList.sendToFrame = function () {
+      var frame = $window.document.getElementById('tadaListId');
+      frame.contentWindow.postMessage({ type: 'updateData', todos: todoList.todos }, '*');
+    };
 
     function listenToDojo () {
       $window.Bridge.onEventDojo(function () {
@@ -76,6 +80,7 @@ angular.module('todoApp', [])
     };
 
     if (!$window.Bridge) {
+      console.info('83', 'plugged on message');
       $window.addEventListener("message", onMessage, false);
     } else {
       listenToDojo();
