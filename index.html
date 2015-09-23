@@ -66,11 +66,10 @@
             myModule.setText('greeting', 'Hello Dojo!');
 
             bridge.onEventNG(function(msg) {
-                myModule.setText('greeting', 'Hello Dojo! ' + msg);
+                myModule.setText('greeting', 'Event received from Angular: ' + msg);
             });
 
             setTimeout(function () {
-                myModule.restoreText('greeting');
                 bridge.sendEventDojo();
             }, 3000);
             

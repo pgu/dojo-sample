@@ -30,7 +30,7 @@ angular.module('todoApp', [])
 
     function listenToDojo() {
       $window.Bridge.onEventDojo(function () {
-        todoList.todos.push({ text: 'on event dojo', done: true });
+        todoList.todos.push({ text: 'Dojo event received', done: true });
         $scope.$applyAsync();
 
         $window.Bridge.sendEventNG('Yipeeee!');
