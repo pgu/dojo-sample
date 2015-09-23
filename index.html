@@ -25,6 +25,10 @@
     <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span> [ <a href=""
                                                                                       ng-click="todoList.archive()">archive</a>
     ]
+
+    [ <a href=""
+         ng-click="todoList.refreshFromFrame()">Refresh from frame</a> ]
+
     <ul class="unstyled">
       <li ng-repeat="todo in todoList.todos">
         <input type="checkbox" ng-model="todo.done">
@@ -39,7 +43,7 @@
 </div>
 <hr>
 <p>iframe</p>
-<iframe src="/myframe/index.html"></iframe>
+<iframe src="/myframe/index.html" width="500px" height="300px"></iframe>
 
 
 <!-- configure Dojo -->

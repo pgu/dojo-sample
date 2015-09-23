@@ -17,6 +17,10 @@
     ]
     [ <a href=""
          ng-click="todoList.refreshFromContainer()">Refresh from container</a> ]
+
+    [ <a href=""
+         ng-click="todoList.sendToContainer()">Send to container</a> ]
+
     <ul class="unstyled">
       <li ng-repeat="todo in todoList.todos">
         <input type="checkbox" ng-model="todo.done">

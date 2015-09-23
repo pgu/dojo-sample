@@ -7,6 +7,15 @@ angular.module('tadaApp', [])
       { text: 'learn angular', done: true },
       { text: 'build an angular app', done: false } ];
 
+    $scope.$watch(function () {
+        return todoList.todos;
+      },
+      function (newList) {
+        $window.localStorage.setItem('frame-tasks', angular.toJson(newList));
+      },
+      true
+    );
+
     todoList.addTodo = function () {
       todoList.todos.push({ text: todoList.todoText, done: false });
       todoList.todoText = '';
@@ -29,9 +38,13 @@ angular.module('tadaApp', [])
     };
 
     todoList.refreshFromContainer = function () {
-      var jsonTasks = $window.localStorage.getItem('tasks');
+      var jsonTasks = $window.localStorage.getItem('container-tasks');
 
       todoList.todos = angular.fromJson(jsonTasks);
+    };
+
+    todoList.sendToContainer = function () {
+      $window.parent.postMessage({ type: 'updateData', todos: todoList.todos }, '*');
     };
 
   });

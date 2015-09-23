@@ -10,7 +10,7 @@ angular.module('todoApp', [])
         return todoList.todos;
       },
       function (newList) {
-        $window.localStorage.setItem('tasks', angular.toJson(newList));
+        $window.localStorage.setItem('container-tasks', angular.toJson(newList));
       },
       true
     );
@@ -36,6 +36,12 @@ angular.module('todoApp', [])
       });
     };
 
+    todoList.refreshFromFrame = function () {
+      var jsonTasks = $window.localStorage.getItem('frame-tasks');
+
+      todoList.todos = angular.fromJson(jsonTasks);
+    };
+
 
     function listenToDojo () {
       $window.Bridge.onEventDojo(function () {
@@ -48,21 +54,31 @@ angular.module('todoApp', [])
 
     }
 
-    function onBridgeLoaded (event) {
+    function updateData (todos) {
+      todoList.todos = todos;
+      $scope.$applyAsync();
+    };
+
+    function onMessage (event) {
 
       console.info(event);
 
       if (event.data === 'bridgeIsLoaded') {
         listenToDojo();
+
+      } else if (event.data.type === 'updateData') {
+        updateData(event.data.todos);
+
+      } else {
+        throw 'Unknown message ' + event.data;
       }
 
     };
 
     if (!$window.Bridge) {
-      $window.addEventListener("message", onBridgeLoaded, false);
+      $window.addEventListener("message", onMessage, false);
     } else {
       listenToDojo();
     }
-
 
   });
