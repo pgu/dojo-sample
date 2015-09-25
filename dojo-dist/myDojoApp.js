@@ -4,70 +4,40 @@ define([
   'dojo/domReady!'
 ], function (dom, on) {
 
-  var domains1 = [
-    { text: 'Dojo', done: false },
-    { text: 'AngularJS', done: false }
-  ];
-
-  var domains2 = [
-    { text: 'localStorage', done: false },
-    { text: 'postMessage', done: false }
-  ];
-
-  var domain1Btn = dom.byId('domain1Btn'),
-    domain2Btn = dom.byId('domain2Btn'),
+  var sendBtn = dom.byId('sendBtn'),
     storeJSBtn = dom.byId('storeJSBtn'),
     retrieveJSBtn = dom.byId('retrieveJSBtn')
     ;
 
-  function updateDomains (key) {
-    var domains = '2' === key ? domains2 : domains1;
+  var self = this;
+  self.domains = [];
+
+  function updateDomains (domains) {
+    self.domains = domains;
 
     var list = domains.reduce(function (accu, domain) {
       return accu + '<li>' + domain.text + ' <b>' + domain.done + '</b>' + '</li>';
     }, '');
 
-    var node = dom.byId('domains' + key);
+    var node = dom.byId('domains');
     node.innerHTML = list;
 
-    if ('1' === key) {
-      var _node = dom.byId('_domains1');
-      _node.innerHTML = list;
-    }
-
+    var _node = dom.byId('_domains');
+    _node.innerHTML = list;
   }
 
   //
   // postMessage
   //
 
-  function sendDataToFrame (key, items) {
+  on(sendBtn, 'click', function (evt) {
     var frame = dom.byId('ngframe');
-    frame.contentWindow.postMessage({ type: 'sendDataToFrame', key: key, items: items }, '*');
-  }
-
-  on(domain1Btn, 'click', function (evt) {
-    sendDataToFrame('1', domains1);
-  });
-
-  on(domain2Btn, 'click', function (evt) {
-    sendDataToFrame('2', domains2);
+    frame.contentWindow.postMessage({ type: 'sendDataToFrame', items: self.domains }, '*');
   });
 
   function onMessage (event) {
     if (event.data.type === 'sendDataToContainer') {
-      var key = event.data.key;
-      var domains = event.data.items;
-
-      if (key === '1') {
-        domains1 = domains;
-      } else if (key === '2') {
-        domains2 = domains;
-      } else {
-        throw 'Unknown key: ' + key;
-      }
-
-      updateDomains(key);
+      updateDomains(event.data.items);
     }
 
   };
@@ -79,12 +49,12 @@ define([
   //
 
   on(storeJSBtn, 'click', function (evt) {
-    window.localStorage.setItem('js-items', JSON.stringify(domains1));
+    window.localStorage.setItem('js-items', JSON.stringify(self.domains));
   });
 
   on(retrieveJSBtn, 'click', function (evt) {
-    domains1 = JSON.parse(window.localStorage.getItem('js-items'));
-    updateDomains('1');
+    var domains = JSON.parse(window.localStorage.getItem('js-items'));
+    updateDomains(domains);
   });
 
   var oldText = {};

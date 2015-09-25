@@ -38,7 +38,7 @@ angular.module('todoApp', [])
     };
 
     todoList.sendToContainer = function () {
-      $window.parent.postMessage({ type: 'sendDataToContainer', key: $scope.currentKey, items: todoList.todos }, '*');
+      $window.parent.postMessage({ type: 'sendDataToContainer', items: todoList.todos }, '*');
     };
 
     function updateData (todos) {
@@ -48,7 +48,6 @@ angular.module('todoApp', [])
 
     function onMessage (event) {
       if (event.data.type === 'sendDataToFrame') {
-        $scope.currentKey = event.data.key;
         updateData(event.data.items);
       }
 

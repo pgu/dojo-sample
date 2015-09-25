@@ -15,23 +15,20 @@
   <strong>Local Storage</strong> (enough when navigating from one view to another. RS already uses it.)<br/>
   (Use the action <b>Refresh from local storage</b> in the frame)<br/>
 
-  <button id="storeJSBtn">Store JS</button>
-  <button id="retrieveJSBtn">Retrieve JS from storage</button>
+  <button id="storeJSBtn">Store in storage</button>
+  <button id="retrieveJSBtn">Retrieve from storage</button>
   <br/>
 
-<ul id="_domains1"></ul>
+<ul id="_domains"></ul>
 </p>
 
 <p>
   <strong>PostMessage</strong> (needed if necessary interactions with current outside/inside elements)<br/>
 
-  <button id="domain1Btn">Send JS</button>
+  <button id="sendBtn">Send</button>
   <br/>
-  <ul id="domains1"></ul>
+<ul id="domains"></ul>
 
-  <button id="domain2Btn">Send Web API</button>
-  <br/>
-  <ul id="domains2"></ul>
 </p>
 
 <p>Iframe containing an AngularJS App</p>
@@ -55,8 +52,12 @@
   ], function (myModule) {
     myModule.setText('greeting', 'Hello, I\'m a Dojo application');
 
-    myModule.updateDomains('1');
-    myModule.updateDomains('2');
+    var domains = [
+      { text: 'Dojo', done: false },
+      { text: 'AngularJS', done: false }
+    ];
+
+    myModule.updateDomains(domains);
   });
 </script>
 
