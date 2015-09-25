@@ -17,7 +17,10 @@ define([
 
     var node = dom.byId('items');
     node.innerHTML = items.reduce(function (accu, item) {
-      return accu + '<li>' + item.text + ' <b>' + item.done + '</b>' + '</li>';
+
+      var li = item.done ? '<li class="done-true">' : '<li>';
+      return accu + li + item.text + ' <b>' + item.done + '</b>' + '</li>';
+      
     }, '');
   }
 
