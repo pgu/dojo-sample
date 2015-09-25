@@ -12,12 +12,8 @@
   <h2>Hi, I'm an AngularJS application</h2>
 
   <div ng-controller="TodoListController as todoList">
-    <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
-
-    <br/>
-
     <p>
-      <strong>Local Storage</strong><br/>
+      <strong>1 - Local Storage</strong><br/>
 
       <button
         ng-click="todoList.getFromLocalStore()">Refresh from local storage
@@ -28,13 +24,15 @@
     </p>
 
     <p>
-      <strong>PostMessage</strong><br/>
+      <strong>2 - PostMessage</strong><br/>
 
 
       <button
         ng-click="todoList.sendToContainer()">Send to container
       </button>
     </p>
+
+    <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining items</span>
 
     <ul class="unstyled">
       <li ng-repeat="todo in todoList.todos">
