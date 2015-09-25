@@ -1,5 +1,5 @@
-angular.module('tadaApp', [])
-  .controller('TadaListController', function ($window, $scope) {
+angular.module('todoApp', [])
+  .controller('TodoListController', function ($window, $scope) {
 
     var todoList = this;
 
