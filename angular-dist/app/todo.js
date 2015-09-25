@@ -5,15 +5,6 @@ angular.module('todoApp', [])
 
     todoList.todos = [];
 
-    $scope.$watch(function () {
-        return todoList.todos;
-      },
-      function (newList) {
-        $window.localStorage.setItem('js-items', angular.toJson(newList));
-      },
-      true
-    );
-
     todoList.addTodo = function () {
       todoList.todos.push({ text: todoList.todoText, done: false });
       todoList.todoText = '';
@@ -28,13 +19,13 @@ angular.module('todoApp', [])
     };
 
     todoList.getFromLocalStore = function () {
-      var jsonTasks = $window.localStorage.getItem('js-items');
+      var jsonTasks = $window.localStorage.getItem('domainItems');
 
       todoList.todos = angular.fromJson(jsonTasks);
     };
 
     todoList.storeInLocalStore = function () {
-      $window.localStorage.setItem('js-items', angular.toJson(todoList.todos));
+      $window.localStorage.setItem('domainItems', angular.toJson(todoList.todos));
     };
 
     todoList.sendToContainer = function () {

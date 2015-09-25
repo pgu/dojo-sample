@@ -49,11 +49,11 @@ define([
   //
 
   on(storeJSBtn, 'click', function (evt) {
-    window.localStorage.setItem('js-items', JSON.stringify(self.domains));
+    window.localStorage.setItem('domainItems', JSON.stringify(self.domains));
   });
 
   on(retrieveJSBtn, 'click', function (evt) {
-    var domains = JSON.parse(window.localStorage.getItem('js-items'));
+    var domains = JSON.parse(window.localStorage.getItem('domainItems'));
     updateDomains(domains);
   });
 
