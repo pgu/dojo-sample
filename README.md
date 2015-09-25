@@ -1,5 +1,11 @@
 # Run it
-For example, with `http-server`
+Unzip the folder. And run it with http-server for example.
+
+```
+cd dojo-sample
+http-server
+```
+Then open http://localhost:8080/
 
 # Frontend communication
 Here are 2 ways of transfering data between 2 applications
