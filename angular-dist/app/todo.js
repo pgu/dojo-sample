@@ -19,13 +19,13 @@ angular.module('todoApp', [])
     };
 
     todoList.getFromLocalStore = function () {
-      var jsonTasks = $window.localStorage.getItem('domainItems');
+      var jsonTasks = $window.localStorage.getItem('appItems');
 
       todoList.todos = angular.fromJson(jsonTasks);
     };
 
     todoList.storeInLocalStore = function () {
-      $window.localStorage.setItem('domainItems', angular.toJson(todoList.todos));
+      $window.localStorage.setItem('appItems', angular.toJson(todoList.todos));
     };
 
     todoList.sendToContainer = function () {

@@ -10,20 +10,15 @@ define([
     ;
 
   var self = this;
-  self.domains = [];
+  self.items = [];
 
-  function updateDomains (domains) {
-    self.domains = domains;
+  function updateItems (items) {
+    self.items = items;
 
-    var list = domains.reduce(function (accu, domain) {
-      return accu + '<li>' + domain.text + ' <b>' + domain.done + '</b>' + '</li>';
+    var node = dom.byId('items');
+    node.innerHTML = items.reduce(function (accu, item) {
+      return accu + '<li>' + item.text + ' <b>' + item.done + '</b>' + '</li>';
     }, '');
-
-    var node = dom.byId('domains');
-    node.innerHTML = list;
-
-    var _node = dom.byId('_domains');
-    _node.innerHTML = list;
   }
 
   //
@@ -32,12 +27,12 @@ define([
 
   on(sendBtn, 'click', function (evt) {
     var frame = dom.byId('ngframe');
-    frame.contentWindow.postMessage({ type: 'sendDataToFrame', items: self.domains }, '*');
+    frame.contentWindow.postMessage({ type: 'sendDataToFrame', items: self.items }, '*');
   });
 
   function onMessage (event) {
     if (event.data.type === 'sendDataToContainer') {
-      updateDomains(event.data.items);
+      updateItems(event.data.items);
     }
 
   };
@@ -49,12 +44,12 @@ define([
   //
 
   on(storeJSBtn, 'click', function (evt) {
-    window.localStorage.setItem('domainItems', JSON.stringify(self.domains));
+    window.localStorage.setItem('appItems', JSON.stringify(self.items));
   });
 
   on(retrieveJSBtn, 'click', function (evt) {
-    var domains = JSON.parse(window.localStorage.getItem('domainItems'));
-    updateDomains(domains);
+    var items = JSON.parse(window.localStorage.getItem('appItems'));
+    updateItems(items);
   });
 
   var oldText = {};
@@ -73,7 +68,7 @@ define([
       delete oldText[ id ];
     },
 
-    updateDomains: updateDomains
+    updateItems: updateItems
 
   };
 });
