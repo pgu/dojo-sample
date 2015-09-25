@@ -5,8 +5,9 @@ define([
 ], function (dom, on) {
 
   var sendBtn = dom.byId('sendBtn'),
-    storeJSBtn = dom.byId('storeJSBtn'),
-    retrieveJSBtn = dom.byId('retrieveJSBtn')
+    storeBtn = dom.byId('storeBtn'),
+    flipBtn = dom.byId('flipBtn'),
+    retrieveBtn = dom.byId('retrieveBtn')
     ;
 
   var self = this;
@@ -20,7 +21,7 @@ define([
 
       var li = item.done ? '<li class="done-true">' : '<li>';
       return accu + li + item.text + ' <b>' + item.done + '</b>' + '</li>';
-      
+
     }, '');
   }
 
@@ -46,13 +47,24 @@ define([
   // localStorage
   //
 
-  on(storeJSBtn, 'click', function (evt) {
+  on(storeBtn, 'click', function (evt) {
     window.localStorage.setItem('appItems', JSON.stringify(self.items));
   });
 
-  on(retrieveJSBtn, 'click', function (evt) {
+  on(retrieveBtn, 'click', function (evt) {
     var items = JSON.parse(window.localStorage.getItem('appItems'));
     updateItems(items);
+  });
+
+  //
+  // miscellaneous
+  //
+
+  on(flipBtn, 'click', function (evt) {
+    self.items.forEach(function (item) {
+      item.done = !item.done;
+    });
+    updateItems(self.items);
   });
 
   var oldText = {};
