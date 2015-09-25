@@ -3,65 +3,24 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Tutorial: Hello Dojo!</title>
+  <title>ngDojo App</title>
   <link rel="icon" href="https://dojotoolkit.org/images/favicons/favicon.ico">
   <link rel="stylesheet" href="ng/todo.css">
-
 </head>
 
 <body>
 
-<p>dojo</p>
+<h1 id="greeting">Hello...</h1>
 
-<h1 id="greeting">Hello</h1>
-<hr>
-<p>angularjs</p>
-
-<div ng-app="todoApp">
-
-  <h2>Todo</h2>
-
-  <div ng-controller="TodoListController as todoList">
-    <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span> [ <a href=""
-                                                                                      ng-click="todoList.archive()">archive</a>
-    ]
-
-    [ <a href=""
-         ng-click="todoList.refreshFromFrame()">Refresh from frame</a> ]
-
-    [ <a href=""
-         ng-click="todoList.sendToFrame()">Send to frame</a> ]
-
-    <ul class="unstyled">
-      <li ng-repeat="todo in todoList.todos">
-        <input type="checkbox" ng-model="todo.done">
-        <span class="done-{{todo.done}}">{{todo.text}}</span>
-      </li>
-    </ul>
-    <form ng-submit="todoList.addTodo()">
-      <input type="text" ng-model="todoList.todoText" size="30" placeholder="add new todo here">
-      <input class="btn-primary" type="submit" value="add">
-    </form>
-  </div>
-</div>
-<hr>
-<p>iframe</p>
-<iframe id="tadaListId" src="/myframe/index.html" width="500px" height="300px"></iframe>
+<p>Iframe containing an AngularJS App</p>
+<iframe id="tadaListId" src="/myframe/index.html" width="90%" height="300px"></iframe>
 
 
-<!-- configure Dojo -->
 <script>
-  // Instead of using data-dojo-config, we're creating a dojoConfig
-  // object *before* we load dojo.js; they're functionally identical,
-  // it's just easier to read this approach with a larger configuration.
-
   var basePath = location.pathname.replace(/\/[^/]*$/, '');
 
   var dojoConfig = {
     async: true,
-    // This code registers the correct location of the "demo"
-    // package so we can load Dojo from the CDN whilst still
-    // being able to load local modules
     packages: [
       { name: "bridge", location: basePath + '/bridge' },
       { name: "demo", location: basePath + '/demo' }
@@ -73,27 +32,13 @@
 
 <script>
   require([
-    'bridge/bridge',
     'demo/myModule'
-  ], function (bridge, myModule) {
-
-    window.postMessage('bridgeIsLoaded', '*');
-
-    myModule.setText('greeting', 'Hello Dojo!');
-
-    bridge.onEventNG(function (msg) {
-      myModule.setText('greeting', 'Event received from Angular: ' + msg);
-    });
-
-    setTimeout(function () {
-      bridge.sendEventDojo();
-    }, 3000);
-
+  ], function (myModule) {
+    myModule.setText('greeting', 'Hello, I\'m a Dojo application');
   });
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-<script src="ng/todo.js"></script>
 
 </body>
 
