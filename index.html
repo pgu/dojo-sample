@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <title>ngDojo App</title>
   <link rel="icon" href="https://dojotoolkit.org/images/favicons/favicon.ico">
-  <link rel="stylesheet" href="ng/todo.css">
 </head>
 
 <body>
@@ -13,7 +12,7 @@
 <h1 id="greeting">Hello...</h1>
 
 <p>Iframe containing an AngularJS App</p>
-<iframe id="tadaListId" src="/myframe/index.html" width="90%" height="300px"></iframe>
+<iframe id="tadaListId" src="/angular-dist/index.html" width="90%" height="300px"></iframe>
 
 
 <script>
@@ -21,10 +20,7 @@
 
   var dojoConfig = {
     async: true,
-    packages: [
-      { name: "bridge", location: basePath + '/bridge' },
-      { name: "demo", location: basePath + '/demo' }
-    ]
+    packages: [ { name: 'dojo-dist', location: basePath + '/dojo-dist' } ]
   };
 </script>
 
