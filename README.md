@@ -8,9 +8,9 @@ http-server
 Then open http://localhost:8080/
 
 # Frontend communication
-Here are 2 ways of transfering data between 2 applications
-- localStorage (enough when navigating from one view to another. RS already uses it)
-- postMessage (needed if necessary interactions with current outside/inside elements)
+Here are 2 ways of transferring data between 2 applications
+- localStorage (which is enough when navigating from one view to another. RS already uses it to store the current api)
+- postMessage (needed if necessary interactions with  outside/inside elements on the same page)
 
 # Notes
 We use the iframe strategy as it enables us to be in a sandbox environment. Indeed, here are some advantages:
@@ -21,5 +21,4 @@ We use the iframe strategy as it enables us to be in a sandbox environment. Inde
  - overriding of libraries, with conflicting versions
 
 Thus, we will spend time only on the definition of what messages to exchange between the 2 applications.
-
-*But* this work can get done if the UX of what is expected from the Designer inside the Manager has been specified.
+*However* to achieve this goal, the UX of what is expected from the Designer inside the Manager must been specified first.
