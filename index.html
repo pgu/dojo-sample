@@ -11,8 +11,31 @@
 
 <h1 id="greeting">Hello...</h1>
 
+<p>
+  <strong>Local Storage</strong> (enough when navigating from one view to another. RS already uses it.)<br/>
+  (Use the action <b>Refresh from local storage</b> in the frame)<br/>
+
+  <button id="storeJSBtn">Store JS</button>
+  <button id="retrieveJSBtn">Retrieve JS from storage</button>
+  <br/>
+
+<ul id="_domains1"></ul>
+</p>
+
+<p>
+  <strong>PostMessage</strong> (needed if necessary interactions with current outside/inside elements)<br/>
+
+  <button id="domain1Btn">Send JS</button>
+  <br/>
+  <ul id="domains1"></ul>
+
+  <button id="domain2Btn">Send Web API</button>
+  <br/>
+  <ul id="domains2"></ul>
+</p>
+
 <p>Iframe containing an AngularJS App</p>
-<iframe id="tadaListId" src="/angular-dist/index.html" width="90%" height="300px"></iframe>
+<iframe id="ngframe" src="/angular-dist/index.html" width="100%" height="300px"></iframe>
 
 
 <script>
@@ -28,9 +51,12 @@
 
 <script>
   require([
-    'demo/myModule'
+    'dojo-dist/myDojoApp'
   ], function (myModule) {
     myModule.setText('greeting', 'Hello, I\'m a Dojo application');
+
+    myModule.updateDomains('1');
+    myModule.updateDomains('2');
   });
 </script>
 

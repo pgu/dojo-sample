@@ -13,14 +13,28 @@
 
   <div ng-controller="TodoListController as todoList">
     <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
-    [ <a href=""
-         ng-click="todoList.archive()">archive</a> ]
-    
-    [ <a href=""
-         ng-click="todoList.refreshFromContainer()">Refresh from container</a> ]
 
-    [ <a href=""
-         ng-click="todoList.sendToContainer()">Send to container</a> ]
+    <br/>
+
+    <p>
+      <strong>Local Storage</strong><br/>
+
+      <button
+        ng-click="todoList.getFromLocalStore()">Refresh from local storage
+      </button>
+      <button
+        ng-click="todoList.storeInLocalStore()">Store in local storage
+      </button>
+    </p>
+
+    <p>
+      <strong>PostMessage</strong><br/>
+
+
+      <button
+        ng-click="todoList.sendToContainer()">Send to container
+      </button>
+    </p>
 
     <ul class="unstyled">
       <li ng-repeat="todo in todoList.todos">

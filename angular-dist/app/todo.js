@@ -3,15 +3,13 @@ angular.module('todoApp', [])
 
     var todoList = this;
 
-    todoList.todos = [
-      { text: 'learn angular', done: true },
-      { text: 'build an angular app', done: false } ];
+    todoList.todos = [];
 
     $scope.$watch(function () {
         return todoList.todos;
       },
       function (newList) {
-        $window.localStorage.setItem('frame-tasks', angular.toJson(newList));
+        $window.localStorage.setItem('js-items', angular.toJson(newList));
       },
       true
     );
@@ -29,22 +27,18 @@ angular.module('todoApp', [])
       return count;
     };
 
-    todoList.archive = function () {
-      var oldTodos = todoList.todos;
-      todoList.todos = [];
-      angular.forEach(oldTodos, function (todo) {
-        if (!todo.done) todoList.todos.push(todo);
-      });
-    };
-
-    todoList.refreshFromContainer = function () {
-      var jsonTasks = $window.localStorage.getItem('container-tasks');
+    todoList.getFromLocalStore = function () {
+      var jsonTasks = $window.localStorage.getItem('js-items');
 
       todoList.todos = angular.fromJson(jsonTasks);
     };
 
+    todoList.storeInLocalStore = function () {
+      $window.localStorage.setItem('js-items', angular.toJson(todoList.todos));
+    };
+
     todoList.sendToContainer = function () {
-      $window.parent.postMessage({ type: 'updateData', todos: todoList.todos }, '*');
+      $window.parent.postMessage({ type: 'sendDataToContainer', key: $scope.currentKey, items: todoList.todos }, '*');
     };
 
     function updateData (todos) {
@@ -53,14 +47,12 @@ angular.module('todoApp', [])
     };
 
     function onMessage (event) {
-      if (event.data.type === 'updateData') {
-        updateData(event.data.todos);
-
-      } else {
-        throw 'Unknown message ' + event.data;
+      if (event.data.type === 'sendDataToFrame') {
+        $scope.currentKey = event.data.key;
+        updateData(event.data.items);
       }
 
     };
 
-    $window.addEventListener("message", onMessage, false);
+    $window.addEventListener('message', onMessage, false);
   });
